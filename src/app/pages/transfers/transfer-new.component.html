@@ -1,0 +1,19 @@
+<mat-card>
+  <h2>New Transfer</h2>
+  <form [formGroup]="form" (ngSubmit)="submit()" class="form">
+    <mat-form-field class="w-100" appearance="outline"><mat-label>From Account</mat-label>
+      <mat-select formControlName="frmAccountId">
+        <mat-option *ngFor="let a of myAccounts" [value]="a.id">{{a.id}} • {{a.accountType}} • {{a.balance | number:'1.2-2'}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="w-100" appearance="outline"><mat-label>To Account</mat-label>
+      <input matInput type="number" formControlName="toAccountId" />
+    </mat-form-field>
+    <mat-form-field class="w-100" appearance="outline"><mat-label>Amount</mat-label>
+      <input matInput type="number" formControlName="amount" />
+    </mat-form-field>
+    <button mat-raised-button color="primary" [disabled]="loading || form.invalid">Send</button>
+    <div class="msg">{{msg}}</div>
+  </form>
+</mat-card>
+

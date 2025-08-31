@@ -1,0 +1,15 @@
+<mat-toolbar color="primary">
+  <span>Bank Web</span>
+  <span class="spacer"></span>
+  <a mat-button routerLink="/">Dashboard</a>
+  <a mat-button routerLink="/accounts">Accounts</a>
+  <a mat-button routerLink="/transactions">Transactions</a>
+  <a mat-button routerLink="/transfers/new">New Transfer</a>
+  <span class="spacer"></span>
+  <button *ngIf="auth.isAuthed" mat-stroked-button (click)="logout()">Logout</button>
+  <a *ngIf="!auth.isAuthed" mat-button routerLink="/login">Login</a>
+</mat-toolbar>
+<div class="container">
+  <router-outlet></router-outlet>
+</div>
+

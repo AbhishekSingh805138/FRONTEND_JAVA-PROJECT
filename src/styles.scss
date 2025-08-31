@@ -1,0 +1,9 @@
+/* You can add global styles to this file, and also import other style files */
+.w-100{ width:100%; }
+.form { display:flex; flex-direction:column; gap:12px; max-width:480px; }
+.err { color:#c00; margin-top:8px; }
+.msg { margin-top:8px; }
+mat-card { padding:16px; margin:12px 0; }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
