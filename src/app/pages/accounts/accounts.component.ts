@@ -7,6 +7,7 @@ import { MatTableModule } from '@angular/material/table';
 
 @Component({
   selector:'app-accounts',
+  standalone: true,
   templateUrl:'./accounts.component.html',
   imports: [CommonModule, MatTableModule, DecimalPipe]
 })
@@ -19,4 +20,3 @@ export class AccountsComponent implements OnInit {
   }
   open(row:any){ this.r.navigate(['/accounts', row.id]); }
 }
-

@@ -9,13 +9,13 @@ import { TransferNewComponent } from './pages/transfers/transfer-new.component';
 import { TransactionsComponent } from './pages/transactions/transactions.component';
 
 export const routes: Routes = [
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: '', component: DashboardComponent, canActivate:[AuthGuard] },
+  { path: 'dashboard', component: DashboardComponent, canActivate:[AuthGuard] },
   { path: 'accounts', component: AccountsComponent, canActivate:[AuthGuard] },
   { path: 'accounts/:id', component: AccountDetailComponent, canActivate:[AuthGuard] },
   { path: 'transfers/new', component: TransferNewComponent, canActivate:[AuthGuard] },
   { path: 'transactions', component: TransactionsComponent, canActivate:[AuthGuard] },
-  { path: '**', redirectTo: '' }
+  { path: '**', redirectTo: 'login' }
 ];
-

@@ -8,6 +8,7 @@ import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector:'app-dashboard',
+  standalone: true,
   templateUrl:'./dashboard.component.html',
   imports: [CommonModule, MatTableModule, MatCardModule, DecimalPipe, DatePipe]
 })
@@ -22,4 +23,3 @@ export class DashboardComponent implements OnInit {
     this.txs.listByUser(uid).subscribe(t=>{ this.tx = t.slice(0,5); this.loading=false; });
   }
 }
-

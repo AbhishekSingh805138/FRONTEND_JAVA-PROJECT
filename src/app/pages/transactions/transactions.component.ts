@@ -6,6 +6,7 @@ import { MatTableModule } from '@angular/material/table';
 
 @Component({
   selector:'app-transactions',
+  standalone: true,
   templateUrl:'./transactions.component.html',
   imports: [CommonModule, MatTableModule, DecimalPipe, DatePipe]
 })
@@ -14,4 +15,3 @@ export class TransactionsComponent implements OnInit {
   constructor(private tx:TransactionsService, private auth:AuthService){}
   ngOnInit(){ const uid=this.auth.currentUserId ?? 0; this.tx.listByUser(uid).subscribe(r=>{ this.rows=r; this.loading=false; }); }
 }
-

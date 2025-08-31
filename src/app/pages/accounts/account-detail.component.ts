@@ -6,6 +6,7 @@ import { MatTableModule } from '@angular/material/table';
 
 @Component({
   selector:'app-account-detail',
+  standalone: true,
   templateUrl:'./account-detail.component.html',
   imports: [CommonModule, MatTableModule, DecimalPipe, DatePipe]
 })
@@ -18,4 +19,3 @@ export class AccountDetailComponent implements OnInit {
     this.svc.statements(this.id).subscribe(t=>this.tx=t);
   }
 }
-

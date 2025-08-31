@@ -1,3 +1,4 @@
-.container { padding: 16px; }
+.container { padding: 24px; max-width: 980px; margin: 0 auto; }
 .spacer { flex: 1 1 auto; }
-mat-toolbar a { color: #fff; text-decoration: none; margin: 0 8px; }
+/* Keep toolbar links readable across themes */
+mat-toolbar a { color: #fff; text-decoration: none; margin: 0 8px; opacity: .95; }

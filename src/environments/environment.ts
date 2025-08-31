@@ -1,5 +1,5 @@
 export const environment = {
   production: false,
-  apiBase: '/api'
+  apiBase: '/api',
+  authBase: '/auth'
 };
-

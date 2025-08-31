@@ -10,7 +10,10 @@
       <input matInput type="password" formControlName="password" />
     </mat-form-field>
     <button mat-raised-button color="primary" [disabled]="loading || form.invalid">Login</button>
+    <div class="msg">
+      New here?
+      <a routerLink="/register">Create an account</a>
+    </div>
     <div *ngIf="err" class="err">{{err}}</div>
   </form>
 </mat-card>
-

@@ -1,9 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* Layout utilities */
 .w-100{ width:100%; }
-.form { display:flex; flex-direction:column; gap:12px; max-width:480px; }
+.form { display:flex; flex-direction:column; gap:16px; max-width:520px; }
 .err { color:#c00; margin-top:8px; }
-.msg { margin-top:8px; }
-mat-card { padding:16px; margin:12px 0; }
+.msg { margin-top:8px; color:#2e7d32; }
+
+/* Center the main cards */
+mat-card { padding:20px; margin:24px auto; max-width:720px; }
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

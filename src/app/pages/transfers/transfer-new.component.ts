@@ -12,6 +12,7 @@ import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector:'app-transfer-new',
+  standalone: true,
   templateUrl:'./transfer-new.component.html',
   imports: [
     CommonModule,
@@ -37,4 +38,3 @@ export class TransferNewComponent implements OnInit {
     this.tx.create(body).subscribe({ next:()=>{ this.msg='Transfer successful'; this.loading=false; }, error:()=>{ this.msg='Transfer failed'; this.loading=false; } });
   }
 }
-
