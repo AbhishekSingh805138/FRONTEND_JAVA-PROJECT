@@ -1,4 +1,38 @@
-<h2>My Transactions</h2>
+<div class="d-flex items-center justify-between mb-3">
+  <h2 class="m-0">My Transactions</h2>
+  <button mat-raised-button color="primary" (click)="startCreate()" *ngIf="!creating">Create Transaction</button>
+  <div *ngIf="creating">
+    <button mat-stroked-button color="primary" (click)="submitCreate()" [disabled]="form.invalid">Save</button>
+    <button mat-button (click)="cancelCreate()">Cancel</button>
+  </div>
+  
+  
+  
+  
+  
+  
+</div>
+
+<div *ngIf="creating" class="mb-4">
+  <form [formGroup]="form" class="form row">
+    <mat-form-field appearance="outline" class="w-25 mr-2">
+      <mat-label>From Account ID</mat-label>
+      <input matInput type="number" formControlName="frmAccountId" />
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="w-25 mr-2">
+      <mat-label>To Account ID</mat-label>
+      <input matInput type="number" formControlName="toAccountId" />
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="w-25 mr-2">
+      <mat-label>Amount</mat-label>
+      <input matInput type="number" formControlName="amount" />
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="w-25 mr-2">
+      <mat-label>User ID</mat-label>
+      <input matInput type="number" formControlName="userId" />
+    </mat-form-field>
+  </form>
+</div>
 
 <div *ngIf="loading">Loading...</div>
 <div *ngIf="!loading && error" class="text-warn">{{error}}</div>

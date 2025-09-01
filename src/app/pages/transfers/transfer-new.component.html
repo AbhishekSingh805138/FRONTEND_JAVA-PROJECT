@@ -1,4 +1,4 @@
-<mat-card>
+<!-- <mat-card>
   <h2>New Transfer</h2>
   <form [formGroup]="form" (ngSubmit)="submit()" class="form">
     <mat-form-field class="w-100" appearance="outline"><mat-label>From Account</mat-label>
@@ -16,4 +16,59 @@
     <div class="msg">{{msg}}</div>
   </form>
 </mat-card>
+ -->
+<mat-card>
+  <h2>New Transfer</h2>
 
+  <form [formGroup]="form" (ngSubmit)="submit()" class="form">
+
+    <!-- FROM -->
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>From Account</mat-label>
+      <mat-select formControlName="frmAccountId" required>
+        <mat-option *ngFor="let a of myAccounts" [value]="+a.id">
+          {{ a.id }} • {{ a.accountType }} • {{ a.balance | number:'1.2-2' }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="form.get('frmAccountId')?.hasError('required')">
+        Please choose a source account
+      </mat-error>
+    </mat-form-field>
+
+    <!-- TO (recommended: also a select so you never send 0) -->
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>To Account</mat-label>
+      <mat-select formControlName="toAccountId" required>
+        <mat-option *ngFor="let a of myAccounts"
+                    [disabled]="a.id === form.value.frmAccountId"
+                    [value]="+a.id">
+          {{ a.id }} • {{ a.accountType }} • {{ a.balance | number:'1.2-2' }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="form.get('toAccountId')?.hasError('required')">
+        Please choose a destination account
+      </mat-error>
+      <mat-error *ngIf="form.get('toAccountId')?.hasError('min')">
+        Destination account id must be a positive number
+      </mat-error>
+      <mat-error *ngIf="form.value.frmAccountId === form.value.toAccountId">
+        From and To accounts cannot be the same
+      </mat-error>
+    </mat-form-field>
+
+    <!-- AMOUNT -->
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Amount</mat-label>
+      <input matInput type="number" formControlName="amount" min="1" step="1">
+      <mat-error *ngIf="form.get('amount')?.hasError('required')">Amount is required</mat-error>
+      <mat-error *ngIf="form.get('amount')?.hasError('min')">Amount must be at least 1</mat-error>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit"
+            [disabled]="loading || form.invalid || form.value.frmAccountId === form.value.toAccountId">
+      Send
+    </button>
+
+    <div class="msg">{{ msg }}</div>
+  </form>
+</mat-card>
