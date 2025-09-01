@@ -10,5 +10,20 @@
     "secure": false,
     "changeOrigin": true,
     "logLevel": "debug"
+  },
+  "/transactions": {
+    "target": "http://localhost:8083",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  },
+  "/tx": {
+    "target": "http://localhost:8083",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug",
+    "pathRewrite": {
+      "^/tx": "/transactions"
+    }
   }
 }
