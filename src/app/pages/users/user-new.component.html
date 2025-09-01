@@ -1,0 +1,30 @@
+<mat-card>
+  <h2>Create User</h2>
+
+  <form [formGroup]="form" (ngSubmit)="submit()" class="form">
+
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Username (email)</mat-label>
+      <input matInput type="email" formControlName="username" required />
+      <mat-error *ngIf="form.get('username')?.hasError('required')">Username is required</mat-error>
+      <mat-error *ngIf="form.get('username')?.hasError('email')">Must be a valid email</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Password</mat-label>
+      <input matInput type="password" formControlName="password" required />
+      <mat-error *ngIf="form.get('password')?.hasError('required')">Password is required</mat-error>
+      <mat-error *ngIf="form.get('password')?.hasError('minlength')">Min 4 characters</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Address</mat-label>
+      <textarea matInput formControlName="address" rows="3"></textarea>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit" [disabled]="loading || form.invalid">Save</button>
+
+    <div class="msg">{{ msg }}</div>
+  </form>
+</mat-card>
+

@@ -4,7 +4,7 @@
   <a mat-button routerLink="/dashboard">Dashboard</a>
   <a mat-button routerLink="/accounts">Accounts</a>
   <a mat-button routerLink="/transactions">Transactions</a>
-  <a mat-button routerLink="/transfers/new">New Transfer</a>
+  <a mat-button routerLink="/users/new">Users</a>
   <span class="spacer"></span>
   <button *ngIf="auth.isAuthed" mat-stroked-button (click)="logout()">Logout</button>
   <a *ngIf="!auth.isAuthed" mat-button routerLink="/login">Login</a>
