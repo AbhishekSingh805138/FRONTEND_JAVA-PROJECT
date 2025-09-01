@@ -28,4 +28,8 @@ export class UsersService {
       headers: { 'Content-Type': 'application/json', Accept: 'application/json' }
     });
   }
+
+  delete(id: number){
+    return this.http.delete<void>(`${this.base}/${id}`);
+  }
 }

@@ -20,7 +20,7 @@ export class UserNewComponent implements OnInit {
   form!: ReturnType<FormBuilder['group']>;
   rows: UserRes[] = [];
   error: string | undefined;
-  displayedColumns = ['userId','username','address'];
+  displayedColumns = ['userId','username','address','actions'];
 
   constructor(private fb: FormBuilder, private users: UsersService) {
     this.form = this.fb.group({
@@ -51,4 +51,21 @@ export class UserNewComponent implements OnInit {
       error: e => { this.msg = e?.error?.message || e?.message || 'Failed to create user'; this.loading=false; }
     });
   }
+
+  delete(row: UserRes) {
+  const id = row?.userId;
+  if (!id) return;
+
+  this.loading = true;
+  this.error = undefined;
+
+  this.users.delete(Number(id)).subscribe({
+    next: () => this.load(),
+    error: e => {
+      this.error = e?.error?.message || e?.message || 'Failed to delete user';
+      this.loading = false;
+    }
+  });
+}
+
 }
