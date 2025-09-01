@@ -35,7 +35,17 @@ export class AccountsService {
       .get<any>(`${this.base}/${id}`, { headers: { Accept: 'application/json' } })
       .pipe(map(this.normalize));
   }
-  create(b: AccountCreate){ return this.http.post<Account>(this.base, b); }
+  create(b: any){
+    const payload = {
+      accountType: b.accountType,
+      accountBalance: b.accountBalance,
+      userId: b.userId,
+      secretPassword: b.secretPassword
+    };
+    return this.http
+      .post<any>(this.base, payload, { headers: { 'Content-Type': 'application/json', Accept:'application/json' } })
+      .pipe(map(this.normalize));
+  }
   update(id:number, b: Partial<Account>){ return this.http.put<Account>(`${this.base}/${id}`, b); }
   updateBalance(id:number, b: BalanceUpdate){ return this.http.put<Account>(`${this.base}/${id}/updateBalance`, b); }
   statements(id:number){ return this.http.get<Transaction[]>(`${this.base}/${id}/statements`); }
