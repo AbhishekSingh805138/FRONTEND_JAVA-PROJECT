@@ -12,11 +12,14 @@ import { MatTableModule } from '@angular/material/table';
   imports: [CommonModule, MatTableModule, DecimalPipe]
 })
 export class AccountsComponent implements OnInit {
-  rows:any[]=[]; loading=true; displayedColumns=['id','type','bal'];
+  rows:any[]=[]; loading=true; displayedColumns=['id','type','bal']; error:string|undefined;
   constructor(private svc:AccountsService, private auth:AuthService, private r:Router){}
   ngOnInit(){
-    const uid = this.auth.currentUserId ?? 0;
-    this.svc.byUser(uid).subscribe(r=>{ this.rows=r; this.loading=false; });
+    // Show all accounts from 8082 (backend has no per-user endpoint matching our token sometimes)
+    this.svc.list().subscribe({
+      next: r=>{ this.rows=r; this.loading=false; },
+      error: e=>{ this.error = (e?.message)||'Failed to load accounts'; this.loading=false; }
+    });
   }
   open(row:any){ this.r.navigate(['/accounts', row.id]); }
 }

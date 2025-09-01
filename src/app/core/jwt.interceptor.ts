@@ -9,9 +9,9 @@ export class JwtInterceptor implements HttpInterceptor {
   constructor(private tokens: TokenService) {}
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const t = this.tokens.getToken();
-    // Skip attaching Authorization to the transactions backend (8083) unless needed
-    const isTxApi = req.url.startsWith(environment.transactionsBase);
-    const cloned = t && !isTxApi ? req.clone({ setHeaders: { Authorization: `Bearer ${t}` } }) : req;
+    // Skip attaching Authorization to the external backends (8082/8083) unless needed
+    const isExternal = req.url.startsWith(environment.transactionsBase) || req.url.startsWith(environment.accountsBase);
+    const cloned = t && !isExternal ? req.clone({ setHeaders: { Authorization: `Bearer ${t}` } }) : req;
     return next.handle(cloned);
   }
 }
