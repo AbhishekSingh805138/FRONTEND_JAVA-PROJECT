@@ -26,7 +26,7 @@ import { MatSelectModule } from '@angular/material/select';
   ]
 })
 export class AccountsComponent implements OnInit {
-  rows:any[]=[]; loading=true; displayedColumns=['id','type','bal']; error:string|undefined;
+  rows:any[]=[]; loading=true; displayedColumns=['id','type','bal','actions']; error:string|undefined;
   creating=false;
   form!: ReturnType<FormBuilder['group']>;
 
@@ -46,6 +46,36 @@ export class AccountsComponent implements OnInit {
     });
   }
   open(row:any){ this.r.navigate(['/accounts', row.id]); }
+
+  // delete(row:any, ev?:Event){
+  //   ev?.stopPropagation();
+  //   const id = row?.id;
+  //   if(!id) return;
+  //   const ok = confirm(`Delete account #${id}? This cannot be undone.`);
+  //   if(!ok) return;
+  //   this.loading = true; this.error = undefined;
+  //   this.svc.delete(id).subscribe({
+  //     next: ()=>{ this.reload(); },
+  //     error: e=>{ this.error = (e?.error?.message)||e?.message||'Failed to delete account'; this.loading=false; }
+  //   });
+  // }
+  delete(row:any, ev?:Event){
+  ev?.stopPropagation();
+  const id = row?.id;
+  if(!id) return;
+
+  this.loading = true; 
+  this.error = undefined;
+
+  this.svc.delete(id).subscribe({
+    next: ()=>{ this.reload(); },
+    error: e=>{
+      this.error = (e?.error?.message)||e?.message||'Failed to delete account';
+      this.loading=false;
+    }
+  });
+}
+
 
   startCreate(){
     this.creating = true; this.form.reset();

@@ -49,4 +49,7 @@ export class AccountsService {
   update(id:number, b: Partial<Account>){ return this.http.put<Account>(`${this.base}/${id}`, b); }
   updateBalance(id:number, b: BalanceUpdate){ return this.http.put<Account>(`${this.base}/${id}/updateBalance`, b); }
   statements(id:number){ return this.http.get<Transaction[]>(`${this.base}/${id}/statements`); }
+  delete(id:number){
+    return this.http.delete<void>(`${this.base}/${id}`);
+  }
 }
