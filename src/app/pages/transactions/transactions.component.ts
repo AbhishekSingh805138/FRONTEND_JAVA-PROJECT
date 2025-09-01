@@ -25,7 +25,7 @@ import { MatInputModule } from '@angular/material/input';
   ]
 })
 export class TransactionsComponent implements OnInit {
-  rows:any[]=[]; displayedColumns=['id','date','from','to','amt']; loading=true; error:string|undefined;
+  rows:any[]=[]; displayedColumns=['id','date','from','to','amt','actions']; loading=true; error:string|undefined;
   creating=false;
   form!: ReturnType<FormBuilder['group']>;
 
@@ -70,4 +70,22 @@ export class TransactionsComponent implements OnInit {
       error: (e) => { this.error = (e?.error?.message) || e?.message || 'Failed to create transaction'; }
     });
   }
+
+  delete(row:any, ev?:Event) {
+  ev?.stopPropagation();
+  const id = row?.id;
+  if (!id) return;
+
+  this.loading = true;
+  this.error = undefined;
+
+  this.tx.delete(Number(id)).subscribe({
+    next: () => this.load(),
+    error: e => {
+      this.error = (e?.error?.message) || e?.message || 'Failed to delete transaction';
+      this.loading = false;
+    }
+  });
+}
+
 }

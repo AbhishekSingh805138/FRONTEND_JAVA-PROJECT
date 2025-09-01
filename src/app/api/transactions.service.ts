@@ -140,5 +140,8 @@ export class TransactionsService {
       .get<any[]>(`${this.base}?accountId=${Number(accountId)}`, { headers: { Accept: 'application/json' } })
       .pipe(map(arr => arr.map(this.normalize)));
   }
-}
 
+  delete(id: number) {
+    return this.http.delete<void>(`${this.base}/${id}`);
+  }
+}
