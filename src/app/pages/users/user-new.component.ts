@@ -21,6 +21,7 @@ export class UserNewComponent implements OnInit {
   rows: UserRes[] = [];
   error: string | undefined;
   displayedColumns = ['userId','username','address','actions'];
+  editingId: number | null = null;
 
   constructor(private fb: FormBuilder, private users: UsersService) {
     this.form = this.fb.group({
@@ -46,10 +47,28 @@ export class UserNewComponent implements OnInit {
     if(this.form.invalid) return;
     this.loading = true; this.msg = '';
     const body = this.form.getRawValue();
-    this.users.create(body as any).subscribe({
-      next: r => { this.msg = `User created with ID ${r.userId}`; this.form.reset(); this.loading=false; this.load(); },
-      error: e => { this.msg = e?.error?.message || e?.message || 'Failed to create user'; this.loading=false; }
-    });
+    if(this.editingId){
+      this.users.update(this.editingId, body as any).subscribe({
+        next: r => { this.msg = `User #${r.userId} updated`; this.form.reset(); this.editingId=null; this.loading=false; this.load(); },
+        error: e => { this.msg = e?.error?.message || e?.message || 'Failed to update user'; this.loading=false; }
+      });
+    } else {
+      this.users.create(body as any).subscribe({
+        next: r => { this.msg = `User created with ID ${r.userId}`; this.form.reset(); this.loading=false; this.load(); },
+        error: e => { this.msg = e?.error?.message || e?.message || 'Failed to create user'; this.loading=false; }
+      });
+    }
+  }
+
+  startEdit(row: UserRes){
+    this.editingId = row.userId;
+    this.form.reset();
+    this.form.patchValue({ username: row.username, address: row.address || '' });
+    this.msg = ` User Updated #${row.userId}` ;
+  }
+
+  cancelEdit(){
+    this.editingId = null; this.form.reset(); this.msg = '';
   }
 
   delete(row: UserRes) {

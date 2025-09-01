@@ -32,4 +32,10 @@ export class UsersService {
   delete(id: number){
     return this.http.delete<void>(`${this.base}/${id}`);
   }
+
+  update(id: number, body: Partial<UserCreateReq>){
+    return this.http.put<UserRes>(`${this.base}/${id}`, body, {
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' }
+    });
+  }
 }

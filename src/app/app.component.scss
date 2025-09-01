@@ -2,3 +2,9 @@
 .spacer { flex: 1 1 auto; }
 /* Keep toolbar links readable across themes */
 mat-toolbar a { color: #fff; text-decoration: none; margin: 0 8px; opacity: .95; }
+
+/* Make the top navbar green */
+.toolbar-green {
+  background-color: #2e7d32 !important; /* Material green 800 */
+  color: #fff;
+}
