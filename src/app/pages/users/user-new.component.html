@@ -28,3 +28,25 @@
   </form>
 </mat-card>
 
+<div *ngIf="loading">Loading...</div>
+<div *ngIf="!loading && error" class="text-warn">{{error}}</div>
+
+<table mat-table [dataSource]="rows" *ngIf="!loading && rows.length" class="mt-4">
+  <ng-container matColumnDef="userId">
+    <th mat-header-cell *matHeaderCellDef>ID</th>
+    <td mat-cell *matCellDef="let r">{{r.userId}}</td>
+  </ng-container>
+  <ng-container matColumnDef="username">
+    <th mat-header-cell *matHeaderCellDef>Username</th>
+    <td mat-cell *matCellDef="let r">{{r.username}}</td>
+  </ng-container>
+  <ng-container matColumnDef="address">
+    <th mat-header-cell *matHeaderCellDef>Address</th>
+    <td mat-cell *matCellDef="let r">{{r.address}}</td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+<div *ngIf="!loading && !error && !rows.length" class="mt-2">No users found.</div>

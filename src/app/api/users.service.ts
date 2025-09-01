@@ -19,10 +19,13 @@ export class UsersService {
   base = `${environment.usersBase}`; // http://localhost:8081/users
   constructor(private http: HttpClient) {}
 
+  list(){
+    return this.http.get<UserRes[]>(this.base, { headers: { Accept: 'application/json' } });
+  }
+
   create(body: UserCreateReq) {
     return this.http.post<UserRes>(this.base, body, {
       headers: { 'Content-Type': 'application/json', Accept: 'application/json' }
     });
   }
 }
-
