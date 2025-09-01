@@ -5,6 +5,7 @@ import { AuthService } from '../../core/auth.service';
 import { CommonModule, DecimalPipe, DatePipe } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector:'app-dashboard',
@@ -13,13 +14,27 @@ import { MatCardModule } from '@angular/material/card';
   imports: [CommonModule, MatTableModule, MatCardModule, DecimalPipe, DatePipe]
 })
 export class DashboardComponent implements OnInit {
-  accounts:any[]=[]; tx:any[]=[]; total=0; loading=true;
+  totalAccounts=0; totalBalance=0; recent:any[]=[]; loading=true; error:string|undefined;
+  displayedColumns = ['date','amt'];
+
   constructor(private acc:AccountsService, private txs:TransactionsService, public auth:AuthService){}
+
   ngOnInit(){
-    const uid = this.auth.currentUserId ?? 0;
-    this.acc.byUser(uid).subscribe(a=>{
-      this.accounts=a; this.total = a.reduce((s,x)=>s+(x.balance||0),0);
+    // Use available services to populate overview; fall back to full lists
+    this.loading = true; this.error = undefined;
+    forkJoin({
+      accounts: this.acc.list(),
+      tx: this.txs.list()
+    }).subscribe({
+      next: ({accounts, tx}) => {
+        this.totalAccounts = accounts.length;
+        this.totalBalance = accounts.reduce((sum, a:any)=> sum + (Number(a.balance)||0), 0);
+        // sort recent by date desc and take 5
+        const parse = (d:any)=> new Date(d || 0).getTime();
+        this.recent = [...tx].sort((a:any,b:any)=> parse(b.date_transaction) - parse(a.date_transaction)).slice(0,5);
+        this.loading=false;
+      },
+      error: e => { this.error = e?.message || 'Failed to load dashboard'; this.loading=false; }
     });
-    this.txs.listByUser(uid).subscribe(t=>{ this.tx = t.slice(0,5); this.loading=false; });
   }
 }
