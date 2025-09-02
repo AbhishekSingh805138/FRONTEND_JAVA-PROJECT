@@ -18,8 +18,9 @@ body::before {
   position: fixed;
   inset: 0;
   z-index: -1;
+  /* Blue-tinted background with subtle bank illustration */
   background:
-    linear-gradient(rgba(255,255,255,0.75), rgba(255,255,255,0.75)),
+    linear-gradient(rgba(33,150,243,0.88), rgba(33,150,243,0.88)), /* Material Blue 500 */
     url('/bg-bank.svg') center/cover no-repeat fixed;
 }
 
