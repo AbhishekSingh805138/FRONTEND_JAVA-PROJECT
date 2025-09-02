@@ -10,6 +10,19 @@
   
 </div>
 
+<!-- Static Notifications -->
+<mat-card class="mt-4" *ngIf="!loading && !error">
+  <h3 class="mt-0">Notifications</h3>
+  <ul class="alerts-list">
+    <li *ngFor="let n of notifications" class="alert" [ngClass]="n.type">
+      <span class="emoji" aria-hidden="true">{{ iconMap[n.type] }}</span>
+      <span>{{ n.text }}</span>
+    </li>
+  </ul>
+  <small class="muted">These are sample static messages for demo.</small>
+  
+</mat-card>
+
 <h3 class="mt-4">Recent Transactions</h3>
 <table mat-table [dataSource]="recent" *ngIf="!loading && !error">
   <ng-container matColumnDef="date">

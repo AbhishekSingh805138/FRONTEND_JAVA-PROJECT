@@ -16,6 +16,13 @@ import { forkJoin } from 'rxjs';
 export class DashboardComponent implements OnInit {
   totalAccounts=0; totalBalance=0; recent:any[]=[]; loading=true; error:string|undefined;
   displayedColumns = ['date','amt'];
+  // Static notifications to show on dashboard
+  notifications: { type: 'info'|'success'|'warn'; text: string }[] = [
+    { type: 'warn', text: 'You have 1 pending transaction awaiting approval.' },
+    { type: 'info', text: 'New transaction alert: INR 1,000.00 credited.' },
+    { type: 'success', text: 'OTP sent successfully to your registered email/mobile.' }
+  ];
+  iconMap: Record<string,string> = { success: '✅', warn: '⚠️', info: 'ℹ️' };
 
   constructor(private acc:AccountsService, private txs:TransactionsService, public auth:AuthService){}
 
